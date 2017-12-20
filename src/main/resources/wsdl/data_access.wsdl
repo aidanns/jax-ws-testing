@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding ="utf-8"?>
+<!-- 
+Aidan
+2017-12-20
+Provides access to data.
+
+Online WSDL 1.1 SOAP generator 0.2
+Julien Blitte
+ -->
+<definitions name="Provides access to data."
+	targetNamespace="com.aidanns.data.wsdl"
+	xmlns:tns="com.aidanns.data.wsdl"
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:xsd1="com.aidanns.data.xsd"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+<!-- definition of datatypes -->
+	<types>
+	<schema targetNamespace="com.aidanns.data.xsd" xmlns="http://www.w3.org/2000/10/XMLSchema">
+		<element name="data">
+		<complexType><all><element name="value" type="string" /></all></complexType>
+		</element>
+		<element name="index">
+		<complexType><all><element name="value" type="int" /></all></complexType>
+		</element>
+		<element name="void">
+		<complexType><sequence></sequence></complexType>
+		</element>
+	</schema>
+	</types>
+<!-- response messages -->
+	<message name='returns_index'>
+	<part name='index' type='xsd:index'/>
+	</message>
+	<message name='returns_data'>
+	<part name='data' type='xsd:data'/>
+	</message>
+<!-- request messages -->
+	<message name='getLatestIndex'>
+	<part name='void' type='xsd:void'/>
+	</message>
+	<message name='getData'>
+	<part name='index' type='xsd:index'/>
+	</message>
+<!-- server's services -->
+	<portType name='DataAccessService'>
+		<operation name='getLatestIndex'>
+		<input message='tns:getLatestIndex'/>
+		<output message='tns:returns_index'/>
+		</operation>
+		<operation name='getData'>
+		<input message='tns:getData'/>
+		<output message='tns:returns_data'/>
+		</operation>
+	</portType>
+<!-- server encoding -->
+	<binding name='DataAccessService_webservices' type='tns:DataAccessService'>
+	<soap:binding style='rpc' transport='http://schemas.xmlsoap.org/soap/http'/>
+		<operation name='getLatestIndex'>
+		<soap:operation soapAction='urn:xmethods-delayed-quotes#getLatestIndex'/>
+		<input><soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/></input>
+		<output><soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/></output>
+		</operation>
+		<operation name='getData'>
+		<soap:operation soapAction='urn:xmethods-delayed-quotes#getData'/>
+		<input><soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/></input>
+		<output><soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/></output>
+		</operation>
+	</binding>
+<!-- access to service provider -->
+	<service name='DataProvider'>
+	<port name='DataProvider_0' binding='DataAccessService_webservices'>
+	<soap:address location='http://127.0.0.1/dataprovider.svc'/>
+	</port>
+	</service>
+</definitions>
+
