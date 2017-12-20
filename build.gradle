@@ -6,5 +6,6 @@ repositories {
 }
 
 dependencies {
-  compile group: "org.apache.cxf", name: "cxf", version: "3.2.1"
+  compile group: "org.apache.cxf", name: "apache-cxf", version: "3.2.1"
+  compile group: "org.apache.axis2", name: "axis2", version: "1.7.7"
 }
