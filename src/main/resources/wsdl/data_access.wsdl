@@ -1,79 +1,85 @@
-<?xml version="1.0" encoding ="utf-8"?>
-<!-- 
-Aidan
-2017-12-20
-Provides access to data.
-
-Online WSDL 1.1 SOAP generator 0.2
-Julien Blitte
- -->
-<definitions name="Provides access to data."
-	targetNamespace="com.aidanns.data.wsdl"
-	xmlns:tns="com.aidanns.data.wsdl"
-	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
-	xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:xsd1="com.aidanns.data.xsd"
-	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/"
-	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
-	xmlns="http://schemas.xmlsoap.org/wsdl/">
-<!-- definition of datatypes -->
-	<types>
-	<schema targetNamespace="com.aidanns.data.xsd" xmlns="http://www.w3.org/2000/10/XMLSchema">
-		<element name="data">
-		<complexType><all><element name="value" type="string" /></all></complexType>
-		</element>
-		<element name="index">
-		<complexType><all><element name="value" type="int" /></all></complexType>
-		</element>
-		<element name="void">
-		<complexType><sequence></sequence></complexType>
-		</element>
-	</schema>
-	</types>
-<!-- response messages -->
-	<message name='returns_index'>
-	<part name='index' type='xsd:index'/>
-	</message>
-	<message name='returns_data'>
-	<part name='data' type='xsd:data'/>
-	</message>
-<!-- request messages -->
-	<message name='getLatestIndex'>
-	<part name='void' type='xsd:void'/>
-	</message>
-	<message name='getData'>
-	<part name='index' type='xsd:index'/>
-	</message>
-<!-- server's services -->
-	<portType name='DataAccessService'>
-		<operation name='getLatestIndex'>
-		<input message='tns:getLatestIndex'/>
-		<output message='tns:returns_index'/>
-		</operation>
-		<operation name='getData'>
-		<input message='tns:getData'/>
-		<output message='tns:returns_data'/>
-		</operation>
-	</portType>
-<!-- server encoding -->
-	<binding name='DataAccessService_webservices' type='tns:DataAccessService'>
-	<soap:binding style='rpc' transport='http://schemas.xmlsoap.org/soap/http'/>
-		<operation name='getLatestIndex'>
-		<soap:operation soapAction='urn:xmethods-delayed-quotes#getLatestIndex'/>
-		<input><soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/></input>
-		<output><soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/></output>
-		</operation>
-		<operation name='getData'>
-		<soap:operation soapAction='urn:xmethods-delayed-quotes#getData'/>
-		<input><soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/></input>
-		<output><soap:body use='encoded' namespace='urn:xmethods-delayed-quotes' encodingStyle='http://schemas.xmlsoap.org/soap/encoding/'/></output>
-		</operation>
-	</binding>
-<!-- access to service provider -->
-	<service name='DataProvider'>
-	<port name='DataProvider_0' binding='DataAccessService_webservices'>
-	<soap:address location='http://127.0.0.1/dataprovider.svc'/>
-	</port>
-	</service>
-</definitions>
-
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="DataAccessService" targetNamespace="http://wsdl.data.aidanns.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://wsdl.data.aidanns.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xsd:schema xmlns:tns="http://wsdl.data.aidanns.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://wsdl.data.aidanns.com/">
+  <xsd:element name="getLatestIndex" type="tns:getLatestIndex"/>
+  <xsd:complexType name="getLatestIndex">
+    <xsd:sequence/>
+  </xsd:complexType>
+  <xsd:element name="getLatestIndexResponse" type="tns:getLatestIndexResponse"/>
+  <xsd:complexType name="getLatestIndexResponse">
+    <xsd:sequence>
+      <xsd:element name="return" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="getData" type="tns:getData"/>
+  <xsd:complexType name="getData">
+    <xsd:sequence>
+      <xsd:element name="index" type="xsd:int"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="getDataResponse" type="tns:getDataResponse"/>
+  <xsd:complexType name="getDataResponse">
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="return" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="getData">
+    <wsdl:part name="parameters" element="tns:getData">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLatestIndex">
+    <wsdl:part name="parameters" element="tns:getLatestIndex">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDataResponse">
+    <wsdl:part name="parameters" element="tns:getDataResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLatestIndexResponse">
+    <wsdl:part name="parameters" element="tns:getLatestIndexResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="DataAccessServicePortType">
+    <wsdl:operation name="getLatestIndex">
+      <wsdl:input name="getLatestIndex" message="tns:getLatestIndex">
+    </wsdl:input>
+      <wsdl:output name="getLatestIndexResponse" message="tns:getLatestIndexResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getData">
+      <wsdl:input name="getData" message="tns:getData">
+    </wsdl:input>
+      <wsdl:output name="getDataResponse" message="tns:getDataResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DataAccessServiceSoapBinding" type="tns:DataAccessServicePortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getLatestIndex">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getLatestIndex">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getLatestIndexResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getData">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getData">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDataResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DataAccessService">
+    <wsdl:port name="DataAccessServicePort" binding="tns:DataAccessServiceSoapBinding">
+      <soap:address location="http://localhost:9090/DataAccessServicePort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

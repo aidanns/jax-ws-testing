@@ -1,5 +1,16 @@
+buildscript{
+  repositories{
+    jcenter()
+  }
+
+  dependencies {
+    classpath 'no.nils:wsdl2java:0.10'
+  }
+}
+
 apply plugin: "java"
 apply plugin: "idea"
+apply plugin: 'no.nils.wsdl2java'
 
 repositories {
   jcenter()
@@ -9,3 +20,22 @@ dependencies {
   compile group: "org.apache.cxf", name: "apache-cxf", version: "3.2.1"
   compile group: "org.apache.axis2", name: "axis2", version: "1.7.7"
 }
+
+/*
+
+wsdl2java {
+  generatedWsdlDir = file("src/main/java/com/aidanns/data/wsdl")
+  wsdlDir = file("src/main/resources")
+  wsdlsToGenerate = [
+    [
+      "-p", "com.aidanns.data.wsdl",
+      "src/main/resources/wsdl/data_access.wsdl"
+    ]
+  ]
+}
+
+wsdl2javaExt {
+  cxfVersion = "3.2.1"
+}
+
+*/
