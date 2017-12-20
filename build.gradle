@@ -21,14 +21,12 @@ dependencies {
   compile group: "org.apache.axis2", name: "axis2", version: "1.7.7"
 }
 
-/*
-
 wsdl2java {
-  generatedWsdlDir = file("src/main/java/com/aidanns/data/wsdl")
+  generatedWsdlDir = file("src/gen/java")
   wsdlDir = file("src/main/resources")
   wsdlsToGenerate = [
     [
-      "-p", "com.aidanns.data.wsdl",
+      "-p", "com.aidanns.data.wsdl.generated",
       "src/main/resources/wsdl/data_access.wsdl"
     ]
   ]
@@ -37,5 +35,3 @@ wsdl2java {
 wsdl2javaExt {
   cxfVersion = "3.2.1"
 }
-
-*/
